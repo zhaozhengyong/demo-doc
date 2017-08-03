@@ -207,13 +207,13 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 - 将bubi_ca文件放在bubichain/bin/下
 - 配置config/ca.json
 
-```bash
+```
 { "root" : { "file_name" : "ca", //根证书的名称"common_name" : "bubi", //证书签发机构名称"email" : "hr@bubi.cn", //证书签发机构邮箱"domain" : "www.bubi.cn", //证书签发机构网站"days" : 3650, //根证书有效期"private_password" : //根证书私钥密码 "42001df2a1f54974baa38073eae2ee53" }, "entity" : { "root_private_file" : "ca.pem", //根证书私钥名称"root_ca_file" : "ca.crt", //根证书名称"root_private_password" : //根证书私钥密码 "42001df2a1f54974baa38073eae2ee53","request_file" : "node_bubi.csr", //待签名文件"days" : 3650, //节点证书有效期"ca_enable" : true//是否开启ca验证 }, "logger" : { "path" : "log/bubi.log", "dest" : "FILESTDOUTSTDERR", "level" : "INFOWARNINGERRORFATAL", "time_capacity" : 1, "size_capacity" : 10, "expire_days" : 5 } }
 ```
 
 - 执行./bin/bubi_ca--root
 
-```bash
+```
 [root@localhost bubichain]# ./bin/bubi_ca --root root certificate file: /usr/local/bubichain/config/ca.crt private file: /usr/local/bubichain/config/ca.pem
 ```
 
@@ -221,7 +221,7 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 
 ##### 获取节点硬件地址
 
-```bash
+```
 [root@localhost bubichain]# ./bin/bubi --hardware-addresslocal hardware address (0bc9143ba7ccc951cf257948af2d02ff)
 ```
 
@@ -241,7 +241,7 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
  
 - 生成文件在bubichain/config目录下 node_bubi.csr：请求证书，node_bubi.pem：证书私钥
 
-```bash
+```
 [root@localhost bubichain]# ./bin/bubi --request-cert //生成节点证书命令，参数含义 missing parameter, need 6 parameters (common_name, organization, email, private_password, hardware_address, node_id(when ignore, it's *) [root@localhost bubichain]# ./bin/bubi --request-cert node bubi bubi@bubi.cn bubitest 0bc9143ba7ccc951cf257948af2d02ff  request file : /usr/local/bubichain/config/node_bubi.csr private file : /usr/local/bubichain/config/node_bubi.pem 0bc9143ba7ccc951cf257948af2d02ff the request certificate information: { "ca" : { "extensions" : { "hardware_address" : "0bc9143ba7ccc951cf257948af2d02ff", "node_id" : "*" }, "subject" : { "common_name" : "node", "email" : "bubi@bubi.cn", "organization" : "bubi" } } }
 ```
 
