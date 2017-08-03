@@ -68,7 +68,6 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
 ### __配置__
 
 #### config.json 
-##### db数据存储
 ##### 数据存储
 
 ```
@@ -79,7 +78,6 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
         "tmp_path":"tmp"
     }
 ```
-#### p2p节点间网络通信
 ##### 节点间网络通信
 ```
     "p2p":{
@@ -105,7 +103,6 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
         }
     }
 ```
-#### http访问通信配置，对外通信配置
 ##### 访问通信配置，对外通信配置
 ```
     "webserver":{
@@ -113,14 +110,12 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
         "remote_authorized":false//部分接口权限
     }
 ```
-#### websocket通信配置，对外通信配置
 ##### 通信配置，对外通信配置
 ```
     "wsserver":{
         "listen_address":"0.0.0.0:7053"
     }
 ```
-#### ledger区块配置
 ##### 区块配置
 ```
     "ledger":{
@@ -132,7 +127,7 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
         "max_apply_ledger_per_round":3
     }
 ```
-#### logger日志配置
+
 ##### 日志配置
 ```
     "logger":{
@@ -144,7 +139,7 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
         "expire_days":10
     }
 ```
-#### validation共识配置
+
 ##### 共识配置
 ```
     "validation":{
@@ -158,28 +153,23 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
         ]
     }
 ```
-## __多节点配置说明__
 #### 多节点配置说明
 - 下面示例是配置多个节点在一条链上运行示例，配置多节点主要修改p2p、validation和ledger这三块的设置
-#### p2p节点间网络通信
-##### p2p节点间网络通信
+##### 节点间网络通信
 - known_peers填写其他节点的ip以及port,
 - ssl填写每台机器申请到的证书信息,
 - node_private_key和network_id保证唯一
 - address与node_private_key是成对应关系
-#### 共识配置
 ##### 共识配置
 - node_private_key保证唯一
 - validators填写每个节点validation的address
 - address与node_private_key是成对应关系
 
-#### 区块配置
 ##### 区块配置
 - genesis_account是创世账号，同一条链上，每个节点配置中genesis_account的值必须一致
 
 注意：运行前请确保每个节点的初始数据是一致，否则无法达成共识产生区块
 
-#### 加密数据配置
 ##### 加密数据配置
 配置文件中所有隐私数据都是加密存储的，解密密钥都是被硬编码在程序中。所以拿到密码明文后需要经过如下转换才可配置：
 
