@@ -74,7 +74,7 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 | entity.crt | 本节点的证书，由根证书签发
 | entity_privkey.pem | 节点证书密钥，使用时需解密。密码被加密配置在 config.p2p.private_password
 
-##### 生产根证书
+##### 生成根证书
 - 将bubi_ca文件放在bubichain/bin/下
 - 配置config/ca.json
 
@@ -116,7 +116,7 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 [root@localhost bubichain]# ./bin/bubi --request-cert //生成节点证书命令，参数含义 missing parameter, need 6 parameters (common_name, organization, email, private_password, hardware_address, node_id(when ignore, it's *) [root@localhost bubichain]# ./bin/bubi --request-cert node bubi bubi@bubi.cn bubitest 0bc9143ba7ccc951cf257948af2d02ff  request file : /usr/local/bubichain/config/node_bubi.csr private file : /usr/local/bubichain/config/node_bubi.pem 0bc9143ba7ccc951cf257948af2d02ff the request certificate information: { "ca" : { "extensions" : { "hardware_address" : "0bc9143ba7ccc951cf257948af2d02ff", "node_id" : "*" }, "subject" : { "common_name" : "node", "email" : "bubi@bubi.cn", "organization" : "bubi" } } }
 ```
 
-##### 将证书发送给管理员
+##### 将待签发证书文件发送给管理员
 
 通过邮件或其他方式将node_bubi.csr文件发送给系统管理员，等待管理员签发证书
 
@@ -127,6 +127,5 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 - 将ca.crt及node_bubi.crt发送给用户
 
 ##### 接收管理员签发的证书
-- 管理员对node_bubi.csr进行证书签发，生成node_bubi.crt
-- 将生成node_bubi.crt文件及ca.crt文件发送给用户
+- 保存管理员发送的node_bubi.crt文件及ca.crt文件
 - 将上面两个文件放到bubichain/config下
