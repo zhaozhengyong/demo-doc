@@ -1,4 +1,5 @@
-﻿## __编译__
+﻿
+## __编译__
 ### Linux
 支持 Ubuntu、Centos 等大多数操作系统编译，下面编译步骤以 Ubuntu 14.04 示例
 - 安装依赖
@@ -46,10 +47,12 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 - 把可执行文件添加到bubichain/bin目录下
 - 把运行脚本添加到bubichain/script目录下
 - 注册service服务
+- 
  ```bash
-sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi 
+    sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi 
 ```
 - 设置开机启动
+- 
  ```bash
  	sudo ln -s -f /etc/init.d/bubi /etc/rc1.d/S99bubi								
 	sudo ln -s -f /etc/init.d/bubi /etc/rc2.d/S99bubi								
@@ -117,7 +120,7 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
     }
 ```
 #### ledger区块配置
-```
+```json
     "ledger":{
         "genesis_account":"a0017bb37115637686a4efd6fabe8bfd74d695c3616515",//创世账号，同一条链上的每一个节点都必须唯一
         "hash_type":1,// 0 : SHA256 1: SM3 //账号的hash类型
@@ -139,7 +142,7 @@ sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi
     }
 ```
 #### validation共识配置
-```
+``` json
     "validation":{
         "type":"pbft",//共识类型
         "address":"a0024740b934765287b16113adc6bb285d72c124d9e3c1",//节点私钥对应的地址
