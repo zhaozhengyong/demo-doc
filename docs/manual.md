@@ -207,7 +207,7 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 - 将bubi_ca文件放在bubichain/bin/下
 - 配置config/ca.json
 
-```json
+```bash
 { "root" : { "file_name" : "ca", //根证书的名称"common_name" : "bubi", //证书签发机构名称"email" : "hr@bubi.cn", //证书签发机构邮箱"domain" : "www.bubi.cn", //证书签发机构网站"days" : 3650, //根证书有效期"private_password" : //根证书私钥密码 "42001df2a1f54974baa38073eae2ee53" }, "entity" : { "root_private_file" : "ca.pem", //根证书私钥名称"root_ca_file" : "ca.crt", //根证书名称"root_private_password" : //根证书私钥密码 "42001df2a1f54974baa38073eae2ee53","request_file" : "node_bubi.csr", //待签名文件"days" : 3650, //节点证书有效期"ca_enable" : true//是否开启ca验证 }, "logger" : { "path" : "log/bubi.log", "dest" : "FILESTDOUTSTDERR", "level" : "INFOWARNINGERRORFATAL", "time_capacity" : 1, "size_capacity" : 10, "expire_days" : 5 } }
 ```
 
