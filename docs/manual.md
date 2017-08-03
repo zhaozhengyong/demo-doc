@@ -43,19 +43,20 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 
 
 ### __节点部署__
-- 在/usr/local下创建bubichain文件夹
-- 在bubichain下根据目录结构创建相应文件夹
-- 把可执行文件添加到bubichain/bin目录下
-- 把bubi.json拷贝到 bubichain/config目录下
-- 把运行脚本添加到bubichain/script目录下
-- 注册service服务
+- 在 /usr/local 下创建 bubichain 文件夹
+- 在 bubichain 下根据目录结构创建相应文件夹
+- 把可执行文件添加到 bubichain/bin 目录下
+- 把源码目录下build/win32/config/bubi.json拷贝到 bubichain/config 目录下
+- 把运行脚本 deploy/bubi 和 deploy/bubid 添加到 bubichain/script 目录下
+- 注册 service 服务
 
-```
+```bash
 sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi 
 ```
+
 - 设置开机启动
 
- ```
+```bash
 sudo ln -s -f /etc/init.d/bubi /etc/rc1.d/S99bubi								
 sudo ln -s -f /etc/init.d/bubi /etc/rc2.d/S99bubi								
 sudo ln -s -f /etc/init.d/bubi /etc/rc3.d/S99bubi								
@@ -63,28 +64,32 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc4.d/S99bubi
 sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi	
  ```
 ### __运行__
- ```bash
+
+```bash
     service bubi start
-  ```
+```
+
 ### __运行状态__
- ```bash
+
+```bash
     service bubi status
-  ```
+```
+
 ### __配置__
 
 #### config.json 
 ##### 数据存储
 
-```
+```json
     "db":{
-        "ledger_path":"data/ledger.db",//
+        "ledger_path":"data/ledger.db",
         "keyvalue_path":"data/keyvalue.db",
         "rational_db_type":"pgsql",
         "tmp_path":"tmp"
     }
 ```
 ##### 节点间网络通信
-```
+```json
     "p2p":{
         "network_id":1,//节点的唯一id
         "address":"a0021ead9c8f4e30200aed9d3bfe89f7cf8e2300133d09",
@@ -108,21 +113,27 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
         }
     }
 ```
-##### 访问通信配置，对外通信配置
-```
+
+##### WEB API 配置
+
+```json
     "webserver":{
         "listen_addresses":"0.0.0.0:29333",
         "remote_authorized":false//部分接口权限
     }
 ```
-##### 通信配置，对外通信配置
-```
+
+##### WebSocket API 配置 
+
+```json
     "wsserver":{
         "listen_address":"0.0.0.0:7053"
     }
 ```
+
 ##### 区块配置
-```
+
+```json
     "ledger":{
         "genesis_account":"a0017bb37115637686a4efd6fabe8bfd74d695c3616515",//创世账号，同一条链上的每一个节点都必须唯一
         "hash_type":1,// 0 : SHA256 1: SM3 //账号的hash类型
@@ -134,10 +145,11 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 ```
 
 ##### 日志配置
-```
+
+```json
     "logger":{
-        "path":"log/bubi.log",//日志目录
-        "dest":"FILE|STDOUT|STDERR",//输出文件分类
+        "path":"log/bubi.log", // 日志目录
+        "dest":"FILE|STDOUT|STDERR", //输出文件分类
         "level":"TRACE|INFO|WARNING|ERROR|FATAL",//日志级别
         "time_capacity":1,
         "size_capacity":10,
@@ -146,7 +158,8 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 ```
 
 ##### 共识配置
-```
+
+```json
     "validation":{
         "type":"pbft",//共识类型
         "address":"a0024740b934765287b16113adc6bb285d72c124d9e3c1",//节点私钥对应的地址
@@ -158,22 +171,29 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
         ]
     }
 ```
+
 #### 多节点配置说明
+
 - 下面示例是配置多个节点在一条链上运行示例，配置多节点主要修改p2p、validation和ledger这三块的设置
+
 ##### 节点间网络通信
-- known_peers填写其他节点的ip以及port,
-- ssl填写每台机器申请到的证书信息,
-- node_private_key和network_id保证唯一
-- address与node_private_key是成对应关系
+
+- config.p2p.consensus_network.known_peers 填写其他节点的 ip 以及 port,
+- config.p2p.ssl 填写每台机器申请到的证书信息,
+- config.p2p.node_private_key 和 network_id 保证唯一
+- address 与 node_private_key 是成对关系
+
 ##### 共识配置
-- node_private_key保证唯一
-- validators填写每个节点validation的address
-- address与node_private_key是成对应关系
+
+- config.p2p.node_private_key 保证各共识节点唯一
+- validators 填写每个节点 validation 的 address
+- address 与 node_private_key是成对应关系
 
 ##### 区块配置
-- genesis_account是创世账号，同一条链上，每个节点配置中genesis_account的值必须一致
+- config.ledger.genesis_account 是创世账号，同一条链上，每个节点配置中 genesis_account 的值必须一致
 
 注意：运行前请确保每个节点的初始数据是一致，否则无法达成共识产生区块
+
 #### 配置同步节点
  - 配置同步节点与验证节点有一点不同的是共识配置中validators不需要填写同步节点validation的address
  
@@ -207,13 +227,38 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 - 将bubi_ca文件放在bubichain/bin/下
 - 配置config/ca.json
 
-```
-{ "root" : { "file_name" : "ca", //根证书的名称"common_name" : "bubi", //证书签发机构名称"email" : "hr@bubi.cn", //证书签发机构邮箱"domain" : "www.bubi.cn", //证书签发机构网站"days" : 3650, //根证书有效期"private_password" : //根证书私钥密码 "42001df2a1f54974baa38073eae2ee53" }, "entity" : { "root_private_file" : "ca.pem", //根证书私钥名称"root_ca_file" : "ca.crt", //根证书名称"root_private_password" : //根证书私钥密码 "42001df2a1f54974baa38073eae2ee53","request_file" : "node_bubi.csr", //待签名文件"days" : 3650, //节点证书有效期"ca_enable" : true//是否开启ca验证 }, "logger" : { "path" : "log/bubi.log", "dest" : "FILESTDOUTSTDERR", "level" : "INFOWARNINGERRORFATAL", "time_capacity" : 1, "size_capacity" : 10, "expire_days" : 5 } }
+```json
+{
+    "root": {
+        "file_name": "ca",
+        //根证书的名称"common_name": "bubi",
+        //证书签发机构名称"email": "hr@bubi.cn",
+        //证书签发机构邮箱"domain": "www.bubi.cn",
+        //证书签发机构网站"days": 3650,
+        //根证书有效期"private_password": //根证书私钥密码"42001df2a1f54974baa38073eae2ee53"
+    },
+    "entity": {
+        "root_private_file": "ca.pem",
+        //根证书私钥名称"root_ca_file": "ca.crt",
+        //根证书名称"root_private_password": //根证书私钥密码"42001df2a1f54974baa38073eae2ee53",
+        "request_file": "node_bubi.csr",
+        //待签名文件"days": 3650,
+        //节点证书有效期"ca_enable": true//是否开启ca验证
+    },
+    "logger": {
+        "path": "log/bubi.log",
+        "dest": "FILESTDOUTSTDERR",
+        "level": "INFOWARNINGERRORFATAL",
+        "time_capacity": 1,
+        "size_capacity": 10,
+        "expire_days": 5
+    }
+}
 ```
 
 - 执行./bin/bubi_ca--root
 
-```
+```bash
 [root@localhost bubichain]# ./bin/bubi_ca --root root certificate file: /usr/local/bubichain/config/ca.crt private file: /usr/local/bubichain/config/ca.pem
 ```
 
@@ -221,7 +266,7 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 
 ##### 获取节点硬件地址
 
-```
+```bash
 [root@localhost bubichain]# ./bin/bubi --hardware-addresslocal hardware address (0bc9143ba7ccc951cf257948af2d02ff)
 ```
 
@@ -241,19 +286,23 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
  
 - 生成文件在bubichain/config目录下 node_bubi.csr：请求证书，node_bubi.pem：证书私钥
 
-```
-[root@localhost bubichain]# ./bin/bubi --request-cert //生成节点证书命令，参数含义 missing parameter, need 6 parameters (common_name, organization, email, private_password, hardware_address, node_id(when ignore, it's *) [root@localhost bubichain]# ./bin/bubi --request-cert node bubi bubi@bubi.cn bubitest 0bc9143ba7ccc951cf257948af2d02ff  request file : /usr/local/bubichain/config/node_bubi.csr private file : /usr/local/bubichain/config/node_bubi.pem 0bc9143ba7ccc951cf257948af2d02ff the request certificate information: { "ca" : { "extensions" : { "hardware_address" : "0bc9143ba7ccc951cf257948af2d02ff", "node_id" : "*" }, "subject" : { "common_name" : "node", "email" : "bubi@bubi.cn", "organization" : "bubi" } } }
+```bash
+[root@localhost bubichain]# ./bin/bubi --request-cert //生成节点证书命令，参数含义 missing parameter, need 6 parameters (common_name, organization, email, private_password, hardware_address, node_id(when ignore, it's *) 
+
+[root@localhost bubichain]# ./bin/bubi --request-cert node bubi
+
+bubi@bubi.cn bubitest 0bc9143ba7ccc951cf257948af2d02ff  request file : /usr/local/bubichain/config/node_bubi.csr private file : /usr/local/bubichain/config/node_bubi.pem 0bc9143ba7ccc951cf257948af2d02ff the request certificate information: { "ca" : { "extensions" : { "hardware_address" : "0bc9143ba7ccc951cf257948af2d02ff", "node_id" : "*" }, "subject" : { "common_name" : "node", "email" : "bubi@bubi.cn", "organization" : "bubi" } } }
 ```
 
 ##### 将待签发证书文件发送给管理员
 
-通过邮件或其他方式将node_bubi.csr文件发送给系统管理员，等待管理员签发证书
+通过邮件或其他方式将 node_bubi.csr 文件发送给系统管理员，等待管理员签发证书
 
 ##### 管理员签发证书
-- 修改config/ca.json配置文件中待签名文件名称
+- 修改 config/ca.json 配置文件中待签名文件名称
 - 执行./bin/bubi_ca --entity
 - 生成节点证书
-- 将ca.crt及node_bubi.crt发送给用户
+- 将 ca.crt 及 node_bubi.crt 发送给用户
 
 ##### 接收管理员签发的证书
 - 保存管理员发送的node_bubi.crt文件及ca.crt文件
@@ -267,7 +316,8 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 运行状态:service bubi status
 ```
 ### 查看系统详细状态
-```
+
+```bash
 [root@centos7x64-201 ~]# curl 127.0.0.1:19333/getModulesStatus
 {
     "glue_manager":{
@@ -298,7 +348,8 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 
 ```
 ### 查看具体数据信息
-```
+
+```bash
 [root@centos7x64-201~]#curl 127.0.0.1:19333/getAccount?address=a0024111d1cc90ac8ee0abd5f957e08e3e1b442b581e88
 {
   "error_code": 0,
@@ -320,8 +371,8 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 
 ```
 ### 清空数据库
-```
+```bash
 bubichain/bin/bubi --dropdb
 ```
 ### 数据库存储
-布比区块链存储的数据默认是存放在bubichain/data目录下，如有需要可修改配置文件中数据存储部分
+布比区块链存储的数据默认是存放在 bubichain/data 目录下，如有需要可修改配置文件中数据存储部分
