@@ -1,5 +1,4 @@
-﻿
-## __编译__
+﻿## __编译__
 ### Linux
 支持 Ubuntu、Centos 等大多数操作系统编译，下面编译步骤以 Ubuntu 14.04 示例
 - 安装依赖
@@ -45,20 +44,21 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 - 在/usr/local下创建bubichain文件夹
 - 在bubichain下根据目录结构创建相应文件夹
 - 把可执行文件添加到bubichain/bin目录下
+- 把bubi.json拷贝到 bubichain/config目录下
 - 把运行脚本添加到bubichain/script目录下
 - 注册service服务
-- 
- ```bash
-    sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi 
+
+```
+sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi 
 ```
 - 设置开机启动
-- 
- ```bash
- 	sudo ln -s -f /etc/init.d/bubi /etc/rc1.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc2.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc3.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc4.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi	
+
+ ```
+sudo ln -s -f /etc/init.d/bubi /etc/rc1.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc2.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc3.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc4.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi	
  ```
 ### __运行__
  ```bash
@@ -71,7 +71,7 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 ### __配置__
 
 #### config.json 
-##### db数据存储
+##### 数据存储
 
 ```
     "db":{
@@ -81,7 +81,7 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
         "tmp_path":"tmp"
     }
 ```
-#### p2p节点间网络通信
+##### 节点间网络通信
 ```
     "p2p":{
         "network_id":1,//节点的唯一id
@@ -106,21 +106,21 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
         }
     }
 ```
-#### http访问通信配置，对外通信配置
+##### 访问通信配置，对外通信配置
 ```
     "webserver":{
         "listen_addresses":"0.0.0.0:29333",
         "remote_authorized":false//部分接口权限
     }
 ```
-#### websocket通信配置，对外通信配置
+##### 通信配置，对外通信配置
 ```
     "wsserver":{
         "listen_address":"0.0.0.0:7053"
     }
 ```
-#### ledger区块配置
-```json
+##### 区块配置
+```
     "ledger":{
         "genesis_account":"a0017bb37115637686a4efd6fabe8bfd74d695c3616515",//创世账号，同一条链上的每一个节点都必须唯一
         "hash_type":1,// 0 : SHA256 1: SM3 //账号的hash类型
@@ -130,7 +130,8 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
         "max_apply_ledger_per_round":3
     }
 ```
-#### logger日志配置
+
+##### 日志配置
 ```
     "logger":{
         "path":"log/bubi.log",//日志目录
@@ -141,8 +142,9 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
         "expire_days":10
     }
 ```
-#### validation共识配置
-``` json
+
+##### 共识配置
+```
     "validation":{
         "type":"pbft",//共识类型
         "address":"a0024740b934765287b16113adc6bb285d72c124d9e3c1",//节点私钥对应的地址
@@ -154,24 +156,26 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
         ]
     }
 ```
-## __多节点配置说明__
+#### 多节点配置说明
 - 下面示例是配置多个节点在一条链上运行示例，配置多节点主要修改p2p、validation和ledger这三块的设置
-#### p2p节点间网络通信
+##### 节点间网络通信
 - known_peers填写其他节点的ip以及port,
 - ssl填写每台机器申请到的证书信息,
 - node_private_key和network_id保证唯一
 - address与node_private_key是成对应关系
-#### 共识配置
+##### 共识配置
 - node_private_key保证唯一
 - validators填写每个节点validation的address
 - address与node_private_key是成对应关系
 
-#### 区块配置
+##### 区块配置
 - genesis_account是创世账号，同一条链上，每个节点配置中genesis_account的值必须一致
 
 注意：运行前请确保每个节点的初始数据是一致，否则无法达成共识产生区块
-
-#### 加密数据配置
+#### 配置同步节点
+ - 配置同步节点与验证节点有一点不同的是共识配置中validators不需要填写同步节点validation的address
+ 
+##### 加密数据配置
 配置文件中所有隐私数据都是加密存储的，解密密钥都是被硬编码在程序中。所以拿到密码明文后需要经过如下转换才可配置：
 
 - 命令./bin/bubi --aes-crypto [参数]
@@ -255,3 +259,68 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 - 将上面两个文件放到bubichain/config下
 
 ## __运维__
+### 服务启动与停止
+```
+启动    :service bubi start
+关闭    :service bubi stop
+运行状态:service bubi status
+```
+### 查看系统详细状态
+```
+[root@centos7x64-201 ~]# curl 127.0.0.1:19333/getModulesStatus
+{
+    "glue_manager":{
+        "cache_topic_size":0,
+        "ledger_upgrade":{
+            "current_states":null,
+            "local_state":null
+        },
+        "system":{
+            "current_time":"2017-07-20 10:32:22", //当前系统时间
+            "process_uptime":"2017-07-20 09:35:06", //bubi启动时间
+            "uptime":"2017-05-14 23:51:04"
+        },
+        "time":"0 ms",
+        "transaction_size":0
+    },
+    "keyvalue_db":Object{...},
+    "ledger_db":Object{...},
+    "ledger_manager":{
+        "account_count":2316,  //账户数
+        "hash_type":"sha256",
+        "ledger_sequence":12187,
+        "time":"0 ms",
+        "tx_count":1185   //交易数
+    },
+    "peer_manager":Object{...},
+    "web server":Object{...},
+
+```
+### 查看具体数据信息
+```
+[root@centos7x64-201~]#curl 127.0.0.1:19333/getAccount?address=a0024111d1cc90ac8ee0abd5f957e08e3e1b442b581e88
+{
+  "error_code": 0,
+  "result": {
+    "address": "a0024111d1cc90ac8ee0abd5f957e08e3e1b442b581e88",
+    "assets": null,
+    "assets_hash": "ad67d57ae19de8068dbcd47282146bd553fe9f684c57c8c114453863ee41abc3",
+    "contract": null,
+    "metadatas": null,
+    "priv": {
+      "master_weight": 1,
+      "thresholds": {
+        "tx_threshold": 1
+      }
+    },
+    "storage_hash": "ad67d57ae19de8068dbcd47282146bd553fe9f684c57c8c114453863ee41abc3"
+  }
+} [root@centos7x64-201 ~]#
+
+```
+### 清空数据库
+```
+bubichain/bin/bubi --dropdb
+```
+### 数据库存储
+布比区块链存储的数据默认是存放在bubichain/data目录下，如有需要可修改配置文件中数据存储部分
