@@ -30,11 +30,13 @@
 ## __架构__
 ![](docs/image/arch.png)
 
-了解[布比区块链详细架构](docs/logo.png "")
-
 ## __使用说明__
 
-参见布比区块链使用说明书 
+参见[布比区块链使用文档](docs/manual.md "") 
+
+##  __开发文档__
+
+参见[布比区块链开发文档](docs/develop.md "") 
 
 ## __License__
 bubichain is under the Apache 2.0 license.
