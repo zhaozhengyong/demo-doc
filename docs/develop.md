@@ -1,17 +1,19 @@
-﻿## __查询账号信息__
+# __���������������ĵ�__
+
+## __��ѯ�˺���Ϣ__
 
 ```http
 GET /getAccount?address=a002423c235a7ba9649347ff85b6be1c51980d1eff0398&key=hello&code=xxx&issuer=xxx
 ```
 
-|参数|描述
+|����|����
 |:--- | --- 
-| address | 账号地址， 必填
-| key | 账号的 metadata 中指定的key的值，如果不填写，那么返回结果中含有所有的metadata
-| code |资产代码
-| issuer | 资产发行商
+| address | �˺ŵ�ַ�� ����
+| key | �˺ŵ� metadata ��ָ����key��ֵ���������д����ô���ؽ���к������е�metadata
+| code |�ʲ�����
+| issuer | �ʲ�������
 
-资产代码和资产发行商这两个变量要么同时填写，要么同时不填写。若不填写，返回的结果中包含所有的资产。
+�ʲ�������ʲ�����������������Ҫôͬʱ��д��Ҫôͬʱ����д��������д�����صĽ���а������е��ʲ���
 
 ```json
 {
@@ -73,7 +75,7 @@ GET /getAccount?address=a002423c235a7ba9649347ff85b6be1c51980d1eff0398&key=hello
 
 
 ```
-- 如果该账户不存在,则返回内容
+- ������˻�������,�򷵻�����
 
 ```json
 {
@@ -83,17 +85,17 @@ GET /getAccount?address=a002423c235a7ba9649347ff85b6be1c51980d1eff0398&key=hello
 ```
 
 
-## __查询ledger__
+## __��ѯledger__
 ```http
 GET /getLedger?seq=xxxx&with_validator=true&with_consvalue=true
 ```
-|参数|描述
+|����|����
 |:--- | --- 
-|seq  | ledger的序号， 如果不填写，返回当前ledger
-|with_validator | true or false,附带验证节点列表
-|with_consvalue | true or fasse,附带共识value
+|seq  | ledger����ţ� �������д�����ص�ǰledger
+|with_validator | true or false,������֤�ڵ��б�
+|with_consvalue | true or fasse,������ʶvalue
 
-- 如果查询到ledger则返回内容:
+- �����ѯ��ledger�򷵻�����:
 
 ```json
 {
@@ -121,7 +123,7 @@ GET /getLedger?seq=xxxx&with_validator=true&with_consvalue=true
 }
 ```
 
-- 如果没有查询到ledger返回的内容:
+- ���û�в�ѯ��ledger���ص�����:
 
 ``` json
 {
@@ -130,18 +132,18 @@ GET /getLedger?seq=xxxx&with_validator=true&with_consvalue=true
 }
 ```
 
-## __查询交易__
+## __��ѯ����__
 
 ```http
 GET /getTransactionHistory?hash=ad545bfc26c440e324076fbbe1d8affbd8a2277858dc35927d425d0fe644e698
 ```
 
-|参数|描述
+|����|����
 |:--- | --- 
-|hash | 交易的hash，是交易的唯一标识
-|ledger_seq | ledger的序号
+|hash | ���׵�hash���ǽ��׵�Ψһ��ʶ
+|ledger_seq | ledger�����
 
-返回示例
+����ʾ��
 ```json
 {
    "error_code" : 0,
@@ -210,7 +212,7 @@ GET /getTransactionHistory?hash=ad545bfc26c440e324076fbbe1d8affbd8a2277858dc3592
 }
 ```
 
-如果该交易不存在则返回
+����ý��ײ������򷵻�
 
 ```json
 {
@@ -222,27 +224,27 @@ GET /getTransactionHistory?hash=ad545bfc26c440e324076fbbe1d8affbd8a2277858dc3592
 }
 ```
 
-## __配置验证节点__
+## __������֤�ڵ�__
 
 ```http
 POST /confValidator?add=a00252641e461a28e0f2d19e01fa9ce4ba89af24d5f0c6&&del=a0027fb6fd8e8ffbf64cf10efebd9278735d5e39a6325e
 ```
 
-|参数|描述
+|����|����
 |:--- | --- 
-|add |逗号分隔的需要添加的验证节点列表
-|del |逗号分隔的需要删除的验证节点列表
+|add |���ŷָ�����Ҫ���ӵ���֤�ڵ��б�
+|del |���ŷָ�����Ҫɾ������֤�ڵ��б�
 
-注：需要大部分的验证节点都执行添加、删除操作，且共识成功后才能添加、删除成功
+ע����Ҫ�󲿷ֵ���֤�ڵ㶼ִ�����ӡ�ɾ���������ҹ�ʶ�ɹ���������ӡ�ɾ���ɹ�
 
 
-## __获取交易序列化数据__
+## __��ȡ�������л�����__
 
-|参数|描述
+|����|����
 |:--- | --- 
-|source_address |交易发起者的地址
-|nonce |序号，相当于seq，通过getAccount获取，如果没有则为0
-|operations | 操作列表
+|source_address |���׷����ߵĵ�ַ
+|nonce |��ţ��൱��seq��ͨ��getAccount��ȡ�����û����Ϊ0
+|operations | �����б�
 
 ```http
 POST /getTransactionBlob
@@ -253,22 +255,22 @@ POST /getTransactionBlob
   "source_address" : "a0025e6de5a793da4b5b00715b7774916c06e9a72b7c18",
   "nonce" : 130,
   "operations" : [{
-      "ps" : "根据不同的操作类型填写"
+      "ps" : "���ݲ�ͬ�Ĳ���������д"
     }, {
-      "ps" : "根据不同的操作类型填写"
+      "ps" : "���ݲ�ͬ�Ĳ���������д"
     }
   ]
 }
 ```
 
 
-## __提交交易__
+## __�ύ����__
 
-|参数|描述
+|����|����
 |:--- | --- 
-|transaction_blob| 交易序列化之后的16进制格式
-|sign_data| 签名16进制格式
-|public_key| 公钥
+|transaction_blob| �������л�֮���16���Ƹ�ʽ
+|sign_data| ǩ��16���Ƹ�ʽ
+|public_key| ��Կ
 
 ```http
 POST /submitTransaction
@@ -291,61 +293,61 @@ POST /submitTransaction
 }
 ```
 
-### __交易字段公共字段__
+### __�����ֶι����ֶ�__
 
-|参数|描述
+|����|����
 |:--- | --- 
-|source_address | 交易发起人地址， required
-|nonce| 交易序号,required
-|expr_condition|表达式字段, optional
-|metadata|交易的元数据, optional
+|source_address | ���׷����˵�ַ�� required
+|nonce| �������,required
+|expr_condition|����ʽ�ֶ�, optional
+|metadata|���׵�Ԫ����, optional
 
-### expr_condtion 表达式规则
-该表达式字段，用于自定义交易有效规则，比如设置交易在某个账户的master_weight 大于 100 有效，则填：
+### expr_condtion ����ʽ����
+�ñ���ʽ�ֶΣ������Զ��彻����Ч���򣬱������ý�����ĳ���˻���master_weight ���� 100 ��Ч�����
 jsonpath(account(\"bubiV8i6mtcDN5a1X7PbRPuaZuo63QRrHxHGr98s\"), \".priv.master_weight\") > 100
 
-#### expr_condtion内部函数
+#### expr_condtion�ڲ�����
 
 
-|参数|描述
+|����|����
 |:--- | --- 
-|account(address)| 获取账户信息, 返回 json 序列化字符串
-|ledger(nonce) | 获取区块信息, 返回 json 序列化字符串
-|jsonpath(json_string, path)| 获取json对象的属性值 
-|LEDGER_SEQ| 内置变量，代表最新的区块高度
-|LEDGER_TIME|内置变量，代表最新的区块生成时间
+|account(address)| ��ȡ�˻���Ϣ, ���� json ���л��ַ���
+|ledger(nonce) | ��ȡ������Ϣ, ���� json ���л��ַ���
+|jsonpath(json_string, path)| ��ȡjson���������ֵ 
+|LEDGER_SEQ| ���ñ������������µ�����߶�
+|LEDGER_TIME|���ñ������������µ���������ʱ��
 
-### 操作
+### ����
 
-操作有4个共同属性
+������4����ͬ����
 
-|参数|描述
+|����|����
 |:--- | --- 
-|source_address| 指哪个账号做此操作,若为空或不填写，默认与交易发起者相同， optional
-|type|表示该操作的类型， required
-|metadata|操作的 metadata 值，16进制表示， optional
-|expr_condition|操作的表达式限制， optional
+|source_address| ָ�ĸ��˺����˲���,��Ϊ�ջ���д��Ĭ���뽻�׷�������ͬ�� optional
+|type|��ʾ�ò��������ͣ� required
+|metadata|������ metadata ֵ��16���Ʊ�ʾ�� optional
+|expr_condition|�����ı���ʽ���ƣ� optional
 
 
-#### 操作类型
-操作类型代码 | 操作类型名称 | 说明
+#### ��������
+�������ʹ��� | ������������ | ˵��
 |:--- | --- | --- |
-1 | 创建帐号 | 用来新建帐号
-2 | 发行资产 | 
-3 | 转移资产 | 调用此接口可以将自定义资产转给另一个帐号
-4 | 设置metadata     |  设置账号属性 key / value 值
-5 | 设置Signer Weight | 设置账号权重，包括master 和 signer
-6 | 设置Threshold | 设置门限值，包括默认门限或具体操作门限
-7 | 调用合约
+1 | �����ʺ� | �����½��ʺ�
+2 | �����ʲ� | 
+3 | ת���ʲ� | ���ô˽ӿڿ��Խ��Զ����ʲ�ת����һ���ʺ�
+4 | ����metadata     |  �����˺����� key / value ֵ
+5 | ����Signer Weight | �����˺�Ȩ�أ�����master �� signer
+6 | ����Threshold | ��������ֵ������Ĭ�����޻�����������
+7 | ���ú�Լ
 
 
-#### 1. 创建账号
+#### 1. �����˺�
 
-|参数|描述
+|����|����
 |:--- | --- 
-|dest_address |  账号的地址
-|contract|  如果不填写，那么这是一个普通的账号。如果填写，那么这是一个合约账号
-| priv|  该账号的权限信息
+|dest_address |  �˺ŵĵ�ַ
+|contract|  �������д����ô����һ����ͨ���˺š������д����ô����һ����Լ�˺�
+| priv|  ���˺ŵ�Ȩ����Ϣ
 
 ```json
 
@@ -399,7 +401,7 @@ jsonpath(account(\"bubiV8i6mtcDN5a1X7PbRPuaZuo63QRrHxHGr98s\"), \".priv.master_w
  }
 ```
 
-#### 2. 发行资产
+#### 2. �����ʲ�
 
 ```json
 
@@ -414,9 +416,9 @@ jsonpath(account(\"bubiV8i6mtcDN5a1X7PbRPuaZuo63QRrHxHGr98s\"), \".priv.master_w
 ```
 
 
-#### 3. 转移资产/调用合约
-该操作先把指定的资产转给目标账号，然后调用目标账号的合约代码并以input作为入参。
-若目标账号没有合约代码，则只进行转移资产操作。
+#### 3. ת���ʲ�/���ú�Լ
+�ò����Ȱ�ָ�����ʲ�ת��Ŀ���˺ţ�Ȼ�����Ŀ���˺ŵĺ�Լ���벢��input��Ϊ��Ρ�
+��Ŀ���˺�û�к�Լ���룬��ֻ����ת���ʲ�������
 
 ```json
 
@@ -440,16 +442,16 @@ jsonpath(account(\"bubiV8i6mtcDN5a1X7PbRPuaZuo63QRrHxHGr98s\"), \".priv.master_w
 ```
 
 
-#### 4. 设置metadata
-设置账号的metadata属性，metadata 是一个key-value 结构，可存储多个键值对。
+#### 4. ����metadata
+�����˺ŵ�metadata���ԣ�metadata ��һ��key-value �ṹ���ɴ洢�����ֵ�ԡ�
 
-|参数|描述
+|����|����
 |:--- | --- 
-| key  |required，length:(0, 256]
-| value  |optional，length:(0, 1048576]
-| version |optional，default 0, 0：不限制版本，>0 : 当前 value 的版本必须为该值， <0 : 非法
+| key  |required��length:(0, 256]
+| value  |optional��length:(0, 1048576]
+| version |optional��default 0, 0�������ư汾��>0 : ��ǰ value �İ汾����Ϊ��ֵ�� <0 : �Ƿ�
 
-每次可设置多个。
+ÿ�ο����ö����
 
 ```json
 {
@@ -464,11 +466,11 @@ jsonpath(account(\"bubiV8i6mtcDN5a1X7PbRPuaZuo63QRrHxHGr98s\"), \".priv.master_w
 ```
 ---
 
-#### 5. 设置Signer Weight
-设置账号的签名属性
-- master_weight optional，default 0， -1 ： 不设置该值，0：设置master权重值为0， >0 && <= MAX(UINT32)：设置权重值为该值，其他：非法
-- address 需要操作的 signer 地址，符合地址校验规则。
-- weight  optional，default 0, 0 ：删除该signer，>0 && <= MAX(UINT32)：设置权重值为该值，其他：非法
+#### 5. ����Signer Weight
+�����˺ŵ�ǩ������
+- master_weight optional��default 0�� -1 �� �����ø�ֵ��0������masterȨ��ֵΪ0�� >0 && <= MAX(UINT32)������Ȩ��ֵΪ��ֵ���������Ƿ�
+- address ��Ҫ������ signer ��ַ�����ϵ�ַУ�����
+- weight  optional��default 0, 0 ��ɾ����signer��>0 && <= MAX(UINT32)������Ȩ��ֵΪ��ֵ���������Ƿ�
 
 ```json
 {
@@ -485,14 +487,14 @@ jsonpath(account(\"bubiV8i6mtcDN5a1X7PbRPuaZuo63QRrHxHGr98s\"), \".priv.master_w
 }
 ```
 
-#### 6. 设置Threshold
-设置账号操作的权限
+#### 6. ����Threshold
+�����˺Ų�����Ȩ��
 
-|参数|描述
+|����|����
 |:--- | --- 
-|tx_threshold |optional，default 0, 表示该账号的最低权限，-1: 表示不设置该值，>0 && <= MAX(INT64)：设置权重值为该值，其他：非法
-|type |表示某种类型的操作  (0, 100]
-|threshold | optional，default 0, 0 ：删除该类型操作，>0 && <= MAX(INT64)：设置权重值为该值，其他：非法
+|tx_threshold |optional��default 0, ��ʾ���˺ŵ����Ȩ�ޣ�-1: ��ʾ�����ø�ֵ��>0 && <= MAX(INT64)������Ȩ��ֵΪ��ֵ���������Ƿ�
+|type |��ʾĳ�����͵Ĳ���  (0, 100]
+|threshold | optional��default 0, 0 ��ɾ�������Ͳ�����>0 && <= MAX(INT64)������Ȩ��ֵΪ��ֵ���������Ƿ�
 
 ```json
 {
@@ -513,11 +515,11 @@ jsonpath(account(\"bubiV8i6mtcDN5a1X7PbRPuaZuo63QRrHxHGr98s\"), \".priv.master_w
 }
 ```
 
-# __如何写合约__
-合约是一段JavaScript代码，系统要求实现main函数，该函数也是合约执行过程中的入口函数。
-该函数的入参是字符串input，是调用该合约的时候指定的。
+# __���д��Լ__
+��Լ��һ��JavaScript���룬ϵͳҪ��ʵ��main�������ú���Ҳ�Ǻ�Լִ�й����е���ں�����
+�ú�����������ַ���input���ǵ��øú�Լ��ʱ��ָ���ġ�
 
-下面是一个简单的例子
+������һ���򵥵�����
 
 ```javascript
 function foo(bar)
@@ -539,18 +541,18 @@ function main(input)
 }
 ```
 
-系统提供了几个全局函数, 这些函数可以获取区块链的一些信息，也可驱动账号发起交易
+ϵͳ�ṩ�˼���ȫ�ֺ���, ��Щ�������Ի�ȡ��������һЩ��Ϣ��Ҳ�������˺ŷ�����
 
-### 1. 获取账号信息(不包含metada和资产)
+### 1. ��ȡ�˺���Ϣ(������metada���ʲ�)
 
 callBackGetAccountInfo(address);
-- address: 账号地址
+- address: �˺ŵ�ַ
 
-例如
+����
 ``` javascript
 var account = callBackGetAccountInfo('a0025e6de5a793da4b5b00715b7774916c06e9a72b7c18');
 /*
-account具有如下格式
+account�������¸�ʽ
  {
     "address": "a002943cede1be5fb0ca0da9f9b49b0ce20b613357524a",
     "assets_hash": "5aef61a8988ce2be1da67cf4b37717748c352b8e4a0bdad2ad0964f80aca0101",
@@ -561,16 +563,16 @@ account具有如下格式
 */
 ```
 
-### 2. 获取某个账号的metadata信息
+### 2. ��ȡĳ���˺ŵ�metadata��Ϣ
 callBackGetAccountMetaData(account_address, metadata_key);
-- account_address: 账号地址
-- metadata_key： metadata的key
+- account_address: �˺ŵ�ַ
+- metadata_key�� metadata��key
 
-例如
+����
 ```javascript
 var bar = callBackGetAccountMetaData('a0025e6de5a793da4b5b00715b7774916c06e9a72b7c18','abc');
 /*
- bar的值是如下的格式
+ bar��ֵ�����µĸ�ʽ
  {
      'key':'abc',
      'value':'hello world',
@@ -579,15 +581,15 @@ var bar = callBackGetAccountMetaData('a0025e6de5a793da4b5b00715b7774916c06e9a72b
 */
 
 ```
-即可得到账号a0025e6de5a793da4b5b00715b7774916c06e9a72b7c18的metadata中abc的值
+���ɵõ��˺�a0025e6de5a793da4b5b00715b7774916c06e9a72b7c18��metadata��abc��ֵ
 
-### 3.  获取某个账号的资产信息
+### 3.  ��ȡĳ���˺ŵ��ʲ���Ϣ
 callBackGetAccountAsset(account_address, asset_property);
 
-- account_address: 账号地址
-- asset_property： 资产属性
+- account_address: �˺ŵ�ַ
+- asset_property�� �ʲ�����
 
-例如
+����
 ```javascript
 var asset_property =
 {
@@ -607,24 +609,24 @@ var bar = callBackGetAccountAsset('a0025e6de5a793da4b5b00715b7774916c06e9a72b7c1
 */
 ```
 
-### 4.  获取交易
+### 4.  ��ȡ����
 callBackGetTransactionInfo(hash);
-- hash: 交易hash
+- hash: ����hash
 
-例如
+����
 ```javascript
 var tx = callBackGetTransactionInfo('ea565a904d568368f4ab556bb20c3f3933411f72ef487e8f73eddbc6d7b84565');
 ```
 
-### 5. 获取区块信息
+### 5. ��ȡ������Ϣ
 callBackGetLedgerInfo(ledger_seq);
-- ledger_seq: 区块号
+- ledger_seq: �����
 
-例如
+����
 ```javascript
 var ledger = callBackGetLedgerInfo(40);
 /*
-ledger具有如下格式
+ledger�������¸�ʽ
 {
     "account_tree_hash": "af05a60772cfd39f3b7838f4032f50450c100dedddf88e0132066688f6ae5c14",
     "consensus_value": {
@@ -642,46 +644,46 @@ ledger具有如下格式
 
 ```
 
-### 6.  该合约账号的地址
-全局变量  ThisAddress
+### 6.  �ú�Լ�˺ŵĵ�ַ
+ȫ�ֱ���  ThisAddress
 
-全局变量ThisAddress的值等于该合约账号的地址。
+ȫ�ֱ���ThisAddress��ֵ���ڸú�Լ�˺ŵĵ�ַ��
 
-例如账号x发起了一笔交易调用合约Y，本次执行过程中，ThisAddress的值就是Y合约账号的地址。
+�����˺�x������һ�ʽ��׵��ú�ԼY������ִ�й����У�ThisAddress��ֵ����Y��Լ�˺ŵĵ�ַ��
 
 ```javascript
 var bar = ThisAddress;
 /*
-bar的值是Y合约的账号地址。
+bar��ֵ��Y��Լ���˺ŵ�ַ��
 */
 ```
 
-### 7.  调用者的地址
-全局变量  Sender
+### 7.  �����ߵĵ�ַ
+ȫ�ֱ���  Sender
 
-全局变量Sender的值等于本次调用该合约的账号。
+ȫ�ֱ���Sender��ֵ���ڱ��ε��øú�Լ���˺š�
 
-例如某账号发起了一笔交易，该交易中有个操作是调用合约Y（该操作的source_address是x），那么合约Y执行过程中，Sender的值就是x账号的地址。
+����ĳ�˺ŷ�����һ�ʽ��ף��ý������и������ǵ��ú�ԼY���ò�����source_address��x������ô��ԼYִ�й����У�Sender��ֵ����x�˺ŵĵ�ַ��
 
 ```javascript
 var bar = Sender;
 /*
-那么bar的值是x的账号地址。
+��ôbar��ֵ��x���˺ŵ�ַ��
 */
 ```
 
 
-### 8.  做交易
-令合约账号做一笔交易，即里面的任意一个操作的source_address都会自动变成合约账号。
-所以source_address是不需要填写的，即使填写也无用。
+### 8.  ������
+���Լ�˺���һ�ʽ��ף������������һ��������source_address�����Զ���ɺ�Լ�˺š�
+����source_address�ǲ���Ҫ��д�ģ���ʹ��дҲ���á�
 
 callBackDoOperation(transaction);
-- transaction: 交易内容
-返回: true/false
+- transaction: ��������
+����: true/false
 
 
 
-例如
+����
 ```javascript
 var transaction =
 {
@@ -701,11 +703,11 @@ var transaction =
 var result = callBackDoOperation(transaction);
 ```
 
-### 9.  设置本合约账号的metadata
+### 9.  ���ñ���Լ�˺ŵ�metadata
 callBackSetAccountMetaData(KeyPair);
-- KeyPair: 要设置的内容
-返回:true/false
-例如
+- KeyPair: Ҫ���õ�����
+����:true/false
+����
 
 ```javascript
 var KeyPair =
@@ -718,9 +720,9 @@ var KeyPair =
 var result = callBackSetAccountMetaData(KeyPair);
 ```
 
-**注意: 此函数相当于合约账号发起一笔交易，该交易的操作是设置自身的metadata。** 
+**ע��: �˺����൱�ں�Լ�˺ŷ���һ�ʽ��ף��ý��׵Ĳ���������������metadata��** 
 
-即和如下用法等价：
+���������÷��ȼۣ�
 
 ```javascript
 var transaction =
@@ -741,61 +743,61 @@ var transaction =
 
 var result = callBackDoOperation(transaction);
 ```
-其中```version```可以不填写。
-- 如果version有值且不为0，其值需要和当前的version匹配才能设置成功。
-- 如果不填写或version为0，那么系统不需要匹配当前version即可设置成功。
+����```version```���Բ���д��
+- ���version��ֵ�Ҳ�Ϊ0����ֵ��Ҫ�͵�ǰ��versionƥ��������óɹ���
+- �������д��versionΪ0����ôϵͳ����Ҫƥ�䵱ǰversion�������óɹ���
 
-## __错误码__
-错误由两部分构成:
-- error_code : 错误码，大概的错误分类
-- error_desc : 错误描述，一般能从错误描述准确发现错误具体信息
+## __������__
+�����������ֹ���:
+- error_code : �����룬��ŵĴ������
+- error_desc : ����������һ���ܴӴ�������׼ȷ���ִ��������Ϣ
 
-错误列表如下：
+�����б����£�
 
 error_code | enum | error_desc
 |:--- | --- | --- |
-0  | ERRCODE_SUCCESS | 操作成功
-1  | ERRCODE_INTERNAL_ERROR | 服务内部错误
-2  | ERRCODE_INVALID_PARAMETER | 参数错误
-3  | ERRCODE_ALREADY_EXIST | 对象已存在， 如重复提交交易
-4  | ERRCODE_NOT_EXIST | 对象不存在，如查询不到账号、TX、区块等
-5  | ERRCODE_TX_TIMEOUT | TX 超时，指该 TX 已经被当前节点从 TX 缓存队列去掉，==但并不代表这个一定不能被执行==
-20  | ERRCODE_EXPR_CONDITION_RESULT_FALSE | 指表达式执行结果为 false，意味着该 TX 当前没有执行成功，==但这并不代表在以后的区块不能成功==
-21  | ERRCODE_EXPR_CONDITION_SYNTAX_ERROR | 指表达式语法分析错误，代表该 TX 一定会失败
-90  | ERRCODE_INVALID_PUBKEY | 公钥非法 
-91  | ERRCODE_INVALID_PRIKEY | 私钥非法
-92  | ERRCODE_ASSET_INVALID | 资产issue 地址非法，或者 code 长度不在有效范围内
-93  | ERRCODE_INVALID_SIGNATURE | 签名权重不够，达不到操作的门限值
-94  | ERRCODE_INVALID_ADDRESS | 地址非法
-95  | ERRCODE_TIME_NOT_IN_RANGE | 不在有效时间范围内
+0  | ERRCODE_SUCCESS | �����ɹ�
+1  | ERRCODE_INTERNAL_ERROR | �����ڲ�����
+2  | ERRCODE_INVALID_PARAMETER | ��������
+3  | ERRCODE_ALREADY_EXIST | �����Ѵ��ڣ� ���ظ��ύ����
+4  | ERRCODE_NOT_EXIST | ���󲻴��ڣ����ѯ�����˺š�TX�������
+5  | ERRCODE_TX_TIMEOUT | TX ��ʱ��ָ�� TX �Ѿ�����ǰ�ڵ�� TX �������ȥ����==�������������һ�����ܱ�ִ��==
+20  | ERRCODE_EXPR_CONDITION_RESULT_FALSE | ָ����ʽִ�н��Ϊ false����ζ�Ÿ� TX ��ǰû��ִ�гɹ���==���Ⲣ���������Ժ�����鲻�ܳɹ�==
+21  | ERRCODE_EXPR_CONDITION_SYNTAX_ERROR | ָ����ʽ�﷨�������󣬴����� TX һ����ʧ��
+90  | ERRCODE_INVALID_PUBKEY | ��Կ�Ƿ� 
+91  | ERRCODE_INVALID_PRIKEY | ˽Կ�Ƿ�
+92  | ERRCODE_ASSET_INVALID | �ʲ�issue ��ַ�Ƿ������� code ���Ȳ�����Ч��Χ��
+93  | ERRCODE_INVALID_SIGNATURE | ǩ��Ȩ�ز������ﲻ������������ֵ
+94  | ERRCODE_INVALID_ADDRESS | ��ַ�Ƿ�
+95  | ERRCODE_TIME_NOT_IN_RANGE | ������Чʱ�䷶Χ��
 96  | ERRCODE_NO_NETWORK_CONSENSUS | 
-97  | ERRCODE_MISSING_OPERATIONS | TX 确实操作
+97  | ERRCODE_MISSING_OPERATIONS | TX ȷʵ����
 98  | ERRCODE_LAGER_OPERATIONS | 
-99  | ERRCODE_BAD_SEQUENCE | 序列号错误
+99  | ERRCODE_BAD_SEQUENCE | ���кŴ���
 100 | ERRCODE_ACCOUNT_LOW_RESERVE | 
-101 | ERRCODE_ACCOUNT_SOURCEDEST_EQUAL | 源目的账号相等
-102 | ERRCODE_ACCOUNT_DEST_EXIST | 创建账号操作，目标账号已存在
-103 | ERRCODE_ACCOUNT_NOT_EXIST | 账户不存在
-104 | ERRCODE_ACCOUNT_ASSET_LOW_RESERVE | 支付操作，资产余额不足
+101 | ERRCODE_ACCOUNT_SOURCEDEST_EQUAL | ԴĿ���˺����
+102 | ERRCODE_ACCOUNT_DEST_EXIST | �����˺Ų�����Ŀ���˺��Ѵ���
+103 | ERRCODE_ACCOUNT_NOT_EXIST | �˻�������
+104 | ERRCODE_ACCOUNT_ASSET_LOW_RESERVE | ֧���������ʲ�����
 105 | ERRCODE_ACCOUNT_ASSET_AMOUNT_TOO_LARGE |
 110 | ERRCODE_SEQNUMBER_NOT_MATCH | 
-114 | ERRCODE_OUT_OF_TXCACHE |  TX 缓存队列已满
-120 | ERRCODE_WEIGHT_NOT_VALID | 权重值不在有效范围内
-121 | ERRCODE_THRESHOLD_NOT_VALID | 门限值不在有效范围内
+114 | ERRCODE_OUT_OF_TXCACHE |  TX �����������
+120 | ERRCODE_WEIGHT_NOT_VALID | Ȩ��ֵ������Ч��Χ��
+121 | ERRCODE_THRESHOLD_NOT_VALID | ����ֵ������Ч��Χ��
 131 | ERRCODE_INPUT_NOT_EXIST |
-144 | ERRCODE_INVALID_DATAVERSION | version 版本号不与账号匹配
+144 | ERRCODE_INVALID_DATAVERSION | version �汾�Ų����˺�ƥ��
 150 | ERRCODE_CONTRACT_EXISTS |
-151 | ERRCODE_CONTRACT_EXECUTE_FAIL | 合约执行失败
-152 | ERRCODE_CONTRACT_SYNTAX_ERROR | 合约语法分析失败
+151 | ERRCODE_CONTRACT_EXECUTE_FAIL | ��Լִ��ʧ��
+152 | ERRCODE_CONTRACT_SYNTAX_ERROR | ��Լ�﷨����ʧ��
 
-## __交易码__
+## __������__
 
-type | enum | 交易说明
+type | enum | ����˵��
 |:--- | --- | --- |
-1  | CREATE_ACCOUNT | 创建账号
-2  | ISSUE_ASSET | 发行资产
-3  | PAYMENT | 转移资产
-4  | SET_METADATA | 设置metadata
-5  | SET_SIGNER_WEIGHT | 设置signerweight
-6  | SET_THRESHOLD | 设置threshold
-7  | INVOKE_CONTRACT | 调用合约
+1  | CREATE_ACCOUNT | �����˺�
+2  | ISSUE_ASSET | �����ʲ�
+3  | PAYMENT | ת���ʲ�
+4  | SET_METADATA | ����metadata
+5  | SET_SIGNER_WEIGHT | ����signerweight
+6  | SET_THRESHOLD | ����threshold
+7  | INVOKE_CONTRACT | ���ú�Լ
