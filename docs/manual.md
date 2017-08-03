@@ -243,7 +243,7 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 [root@localhost bubichain]# ./bin/bubi --request-cert //生成节点证书命令，参数含义 missing parameter, need 6 parameters (common_name, organization, email, private_password, hardware_address, node_id(when ignore, it's *) [root@localhost bubichain]# ./bin/bubi --request-cert node bubi bubi@bubi.cn bubitest 0bc9143ba7ccc951cf257948af2d02ff  request file : /usr/local/bubichain/config/node_bubi.csr private file : /usr/local/bubichain/config/node_bubi.pem 0bc9143ba7ccc951cf257948af2d02ff the request certificate information: { "ca" : { "extensions" : { "hardware_address" : "0bc9143ba7ccc951cf257948af2d02ff", "node_id" : "*" }, "subject" : { "common_name" : "node", "email" : "bubi@bubi.cn", "organization" : "bubi" } } }
 ```
 
-##### 将证书发送给管理员
+##### 将待签发证书文件发送给管理员
 
 通过邮件或其他方式将node_bubi.csr文件发送给系统管理员，等待管理员签发证书
 
@@ -254,8 +254,7 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 - 将ca.crt及node_bubi.crt发送给用户
 
 ##### 接收管理员签发的证书
-- 管理员对node_bubi.csr进行证书签发，生成node_bubi.crt
-- 将生成node_bubi.crt文件及ca.crt文件发送给用户
+- 保存管理员发送的node_bubi.crt文件及ca.crt文件
 - 将上面两个文件放到bubichain/config下
 
 ## __运维__
