@@ -47,16 +47,18 @@ Windows 部署与 Linux 下部署基本类似，本示例以 Linux 为准。
 - 把bubi.json拷贝到 bubichain/config目录下
 - 把运行脚本添加到bubichain/script目录下
 - 注册service服务
- ```bash
+
+```
 sudo ln -s /usr/local/bubichain/scripts/bubi /etc/init.d/bubi 
 ```
 - 设置开机启动
- ```bash
- 	sudo ln -s -f /etc/init.d/bubi /etc/rc1.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc2.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc3.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc4.d/S99bubi								
-	sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi	
+
+ ```
+sudo ln -s -f /etc/init.d/bubi /etc/rc1.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc2.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc3.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc4.d/S99bubi								
+sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi	
  ```
 ### __运行__
  ```bash
