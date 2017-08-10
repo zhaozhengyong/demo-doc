@@ -1,4 +1,4 @@
-﻿# __布比区块链使用文档__
+# __布比区块链使用文档__
 
 ## __编译__
 ### Linux
@@ -225,49 +225,37 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
 
 ##### 生产根证书
 - 将bubi_ca文件放在bubichain/bin/下
-- 配置config/ca.json
-
-```json
-{
-    "root": {
-        "file_name": "ca",
-        //根证书的名称"common_name": "bubi",
-        //证书签发机构名称"email": "hr@bubi.cn",
-        //证书签发机构邮箱"domain": "www.bubi.cn",
-        //证书签发机构网站"days": 3650,
-        //根证书有效期"private_password": //根证书私钥密码"42001df2a1f54974baa38073eae2ee53"
-    },
-    "entity": {
-        "root_private_file": "ca.pem",
-        //根证书私钥名称"root_ca_file": "ca.crt",
-        //根证书名称"root_private_password": //根证书私钥密码"42001df2a1f54974baa38073eae2ee53",
-        "request_file": "node_bubi.csr",
-        //待签名文件"days": 3650,
-        //节点证书有效期"ca_enable": true//是否开启ca验证
-    },
-    "logger": {
-        "path": "log/bubi.log",
-        "dest": "FILESTDOUTSTDERR",
-        "level": "INFOWARNINGERRORFATAL",
-        "time_capacity": 1,
-        "size_capacity": 10,
-        "expire_days": 5
-    }
-}
-```
-
-- 执行./bin/bubi_ca--root
+- 执行./bin/bubi_ca--root 后加参数（全部英文）
+- - 参数解释
+ 
+| 名称 | 描述
+|:--- | --- 
+|root_file_path | 生成路径 
+|root_file_name | 文件名
+|common_name | 通用名称
+| email | 联系邮箱 
+| domain | 域名
+|private_password | 证书私钥（明文）
 
 ```bash
-[root@localhost bubichain]# ./bin/bubi_ca --root root certificate file: /usr/local/bubichain/config/ca.crt private file: /usr/local/bubichain/config/ca.pem
+[root@localhost bubichain]# ./bin/bubi --request-cert
+error: missing parameter, need 7 parameter (root_file_path, root_file_name, common_name, email, domain, days, private_password)
+
+[root@localhost bubichain]# ./bin/bubi_ca --root /usr/local/bubichain/config ca bubi hr@bubi.cn www.bubi.cn 3650 root 
+
+root certificate file: 
+    /usr/local/bubichain/config/ca.crt 
+private file: 
+    /usr/local/bubichain/config/ca.pem
 ```
 
-- 在config下会生成ca.crt,ca.pem两个文件
+- 在/usr/local/bubichain/config下会生成ca.crt,ca.pem两个文件
 
 ##### 获取节点硬件地址
 
 ```bash
-[root@localhost bubichain]# ./bin/bubi --hardware-addresslocal hardware address (0bc9143ba7ccc951cf257948af2d02ff)
+[root@localhost bubichain]# ./bin/bubi --hardware-address
+local hardware address (0bc9143ba7ccc951cf257948af2d02ff)
 ```
 
 ##### 生成节点证书
@@ -277,31 +265,70 @@ sudo ln -s -f /etc/init.d/bubi /etc/rc5.d/S99bubi
  
 | 名称 | 描述
 |:--- | --- 
+|filepath |生成路径 
 |common_name |节点名称 
 |organization |  组织机构名称 
 | email | 联系邮箱 
 |private_password | 证书私钥（明文）
 | hardware_address |硬件地址（由上一步获取）
 | node_id | 节点id，可不填
- 
-- 生成文件在bubichain/config目录下 node_bubi.csr：请求证书，node_bubi.pem：证书私钥
 
 ```bash
-[root@localhost bubichain]# ./bin/bubi --request-cert //生成节点证书命令，参数含义 missing parameter, need 6 parameters (common_name, organization, email, private_password, hardware_address, node_id(when ignore, it's *) 
+[root@localhost bubichain]# ./bin/bubi --request-cert
+error: missing parameter, need 6 parameters (filepath, common_name, organization, email, private_password, hardware_address, node_id(when ignore, it's *)
 
-[root@localhost bubichain]# ./bin/bubi --request-cert node bubi
+[root@localhost bubichain]# ./bin/bubi --request-cert /usr/local/bubichain/config node bubi bubi@bubi.cn bubitest 0bc9143ba7ccc951cf257948af2d02ff  
 
-bubi@bubi.cn bubitest 0bc9143ba7ccc951cf257948af2d02ff  request file : /usr/local/bubichain/config/node_bubi.csr private file : /usr/local/bubichain/config/node_bubi.pem 0bc9143ba7ccc951cf257948af2d02ff the request certificate information: { "ca" : { "extensions" : { "hardware_address" : "0bc9143ba7ccc951cf257948af2d02ff", "node_id" : "*" }, "subject" : { "common_name" : "node", "email" : "bubi@bubi.cn", "organization" : "bubi" } } }
+request file : 
+    /usr/local/bubichain/config/node_bubi.csr 
+private file : 
+    /usr/local/bubichain/config/node_bubi.pem 
+
+the request certificate information: 
+{ 
+    "ca" : { 
+        "extensions" : { 
+            "hardware_address" : "0bc9143ba7ccc951cf257948af2d02ff", 
+            "node_id" : "*" 
+        }, 
+        "subject" : { 
+            "common_name" : "node", 
+            "email" : "bubi@bubi.cn", 
+            "organization" : "bubi" 
+        } 
+    } 
+}
 ```
+- 生成文件在/usr/local/bubichain/config目录下 node_bubi.csr：请求证书，node_bubi.pem：证书私钥
 
 ##### 将待签发证书文件发送给管理员
 
 通过邮件或其他方式将 node_bubi.csr 文件发送给系统管理员，等待管理员签发证书
 
 ##### 管理员签发证书
-- 修改 config/ca.json 配置文件中待签名文件名称
-- 执行./bin/bubi_ca --entity
-- 生成节点证书
+- 执行./bin/bubi_ca --entity 后加参数（全部英文）
+- - 参数解释
+ 
+| 名称 | 描述
+|:--- | --- 
+|filepath |生成路径 
+|common_name |节点名称 
+|organization |  组织机构名称 
+| email | 联系邮箱 
+|private_password | 证书私钥（明文）
+| hardware_address |硬件地址（由上一步获取）
+| node_id | 节点id，可不填
+
+```bash
+[root@localhost bubichain]# ./bin/bubi_ca --entity
+error: missing parameter, need 6 parameter (root_ca_file_path, root_private_file_path, root_private_password, request_file_path, days, ca_enable(must be number, 1 or 0)
+
+[root@localhost bubichain]# ./bin/bubi_ca --entity /usr/local/bubichain/config/ca.crt /usr/local/bubichain/config/ca.pem root /usr/local/bubichain/config/node_bubi.csr 365 1
+
+make user certificate successfully
+user certificate file: /usr/local/bubichain/config/node_bubi.crt
+```
+- 生成文件在/usr/local/bubichain/config目录下 node_bubi.crt：用户证书
 - 将 ca.crt 及 node_bubi.crt 发送给用户
 
 ##### 接收管理员签发的证书
